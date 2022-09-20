@@ -12,7 +12,7 @@ class SecondWindow(QDialog):
 
         uic.loadUi('./ui/printdetails.ui', self)
 
-        self.pushButton.clicked.connect(self.exit)
+        self.printButton.clicked.connect(self.exit)
 
     def exit(self):
         print('printing')
@@ -40,7 +40,7 @@ class SecondWindow(QDialog):
         brush = QBrush(QColor(192, 192, 192))
         painter.setBrush(brush)
 
-        rect = QRectF(50,50,400,500)
+        rect = QRectF(0,0,400,500)
 
         path.addRoundedRect(rect, 10, 10)
         painter.setClipPath(path)
@@ -50,5 +50,7 @@ class SecondWindow(QDialog):
         painter.drawText(rect,Qt.AlignLeft, self.data.toPlainText())
 
         painter.end()
+
+        self.close()
         
 
