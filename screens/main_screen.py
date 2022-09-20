@@ -1,5 +1,5 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QDesktopWidget
+from PyQt5.QtWidgets import QMainWindow, QDesktopWidget, QMessageBox
 from PyQt5.QtCore import Qt
 
 from .printdetails import SecondWindow
@@ -13,6 +13,7 @@ class MainWindow(QMainWindow):
         self.setWindowFlags(Qt.WindowMinimizeButtonHint | Qt.WindowCloseButtonHint)
         
         self.printButton.clicked.connect(self.showPrintDetails)
+        self.resetButton.clicked.connect(self.resetAll)
         
         self.center()
 
@@ -82,3 +83,31 @@ class MainWindow(QMainWindow):
                         ))
         # win.data.setPlainText(f'Total of 1: {self.totalof1.text()}\nTotalof5: {self.totalof5.text()}\nTotalof10: {self.totalof10.text()}\nTotalof20: {self.totalof20.text()}\nTotalof50: {self.totalof50.text()}\nTotalof100: {self.totalof100.text()}\nTotalof200: {self.totalof200.text()}\nTotalof500: {self.totalof500.text()}\nTotalof1000: {self.totalof1000.text()}\nDeduction: {self.deductions.text()}\nRemaining Amount: {self.remainingAmount.text()}\n')
         win.exec()
+
+    def resetAll(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText('Are you sure to clear all fields?')
+        ans = QMessageBox.question(self, "Clearing Fields", "Choose answer", QMessageBox.Yes | QMessageBox.Cancel)
+        if ans == QMessageBox.Yes:
+            print('clearing...')
+            self.reset()
+        else:
+            print('clearing failed')
+
+        # msg.exec()
+
+    def reset(self):
+        self.spinBox1.setValue(0)
+        self.spinBox5.setValue(0)
+        self.spinBox10.setValue(0)
+        self.spinBox20.setValue(0)
+        self.spinBox50.setValue(0)
+        self.spinBox100.setValue(0)
+        self.spinBox200.setValue(0)
+        self.spinBox500.setValue(0)
+        self.spinBox1000.setValue(0)
+
+        self.totalAmount.setText('0')
+        self.deductions.setText('0')
+        self.remainingAmount.setText('0')
